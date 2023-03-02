@@ -1,0 +1,1 @@
+# User.objects.get(username='user1').last_login
