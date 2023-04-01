@@ -4,7 +4,7 @@ from django.db import models
 from django.contrib.auth.models import Group
 from django.utils import timezone
 
-
+#Deyishilmeli qruplashma 5-10 11-15 16+
 class StudentManager(BaseUserManager):
     def create_user(self, pk):
         user = self.model(
@@ -76,8 +76,8 @@ class School(models.Model):
 
 class Teacher(AbstractBaseUser, PermissionsMixin):
     id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=50)
-    surname = models.CharField(max_length=50)
+    name = models.CharField(max_length=50,null=True)
+    surname = models.CharField(max_length=50,null=True)
     email = models.EmailField(unique=True)
     school_id = models.ForeignKey(School, on_delete=models.CASCADE, blank=True, null=True, related_name="teachers")
     emergency_contact = models.CharField(max_length=14, null=True)
@@ -93,7 +93,6 @@ class Teacher(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = ['name', 'surname']
 
     def update_last_login(self):
-        # Update the last_login_date field whenever a user logs in
         self.last_login_date = timezone.now()
         self.save()
 
@@ -111,12 +110,18 @@ class Classroom(models.Model):
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
 
+class Images(models.Model):
+    id = models.AutoField(primary_key=True)
+    icon=models.ImageField(upload_to="icon/",null=True)
 
 class Student(AbstractBaseUser):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=50, null=True)
     surname = models.CharField(max_length=50, null=True)
     age = models.CharField(max_length=50, null=True)
+    email=models.EmailField(null=True) #unique=True
+    secret_word=models.CharField(max_length=100,null=True)
+    icon=models.OneToOneField(Images, on_delete=models.CASCADE)
     school_id = models.ForeignKey(School, on_delete=models.CASCADE, blank=True, null=True, related_name="students")
     class_number = models.IntegerField(null=True)
     classroom_id = models.ForeignKey(Classroom, on_delete=models.CASCADE, blank=True, null=True,
@@ -130,9 +135,7 @@ class Student(AbstractBaseUser):
     created_date = models.DateTimeField(auto_now_add=True)
     login_date = models.DateTimeField(null=True)
     updated_date = models.DateTimeField(auto_now=True)
-    username = None
-    email = None
-    password = None
+
     objects = StudentManager()
 
     REQUIRED_FIELDS = ['name', 'surname', 'age', 'school_id', 'class_number', 'classroom_id', 'emergency_contact','emergency_confirmed']
@@ -146,6 +149,9 @@ class Student(AbstractBaseUser):
     def has_module_perms(self, app_label):
         return False
 
+    def update_last_login(self):
+        self.last_login_date = timezone.now()
+        self.save()
 
 class Question(models.Model):
     id = models.AutoField(primary_key=True)
@@ -154,7 +160,7 @@ class Question(models.Model):
     correct_answer = models.CharField(max_length=1000, null=True)
     question_type = models.CharField(max_length=100, null=True)
     text_answer = models.TextField(null=True, default="No Text")
-    # puzzle_img = models.ImageField(upload_to='images/puzzle', default=None, null=True) #upload to hissesinde sehv var duzelt
+    puzzle_img = models.ImageField(upload_to='puzzle/', null=True) #upload to hissesinde sehv var duzelt
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
 
@@ -165,6 +171,7 @@ class Answer(models.Model):
     answered_by = models.ForeignKey(Student, on_delete=models.CASCADE, blank=True, null=True, related_name="students")
     question_id = models.ForeignKey(Question, on_delete=models.CASCADE, blank=True, null=True, related_name="answers")
     is_correct = models.BooleanField(default=False)
-    # puzzle_img = models.ImageField(upload_to='images/puzzle', default=None, null=True) #upload to hissesinde sehv var duzelt
+    answer_img = models.ImageField(upload_to='answer/', null=True) #upload to hissesinde sehv var duzelt
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
+

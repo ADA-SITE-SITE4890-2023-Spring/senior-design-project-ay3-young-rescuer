@@ -1,4 +1,4 @@
-from adminpanel.models import School, Classroom, Question, Student, Answer,Admin, Teacher
+from adminpanel.models import School, Classroom, Question, Student, Answer, Admin, Teacher
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
@@ -44,7 +44,7 @@ class TeacherAdmin(UserAdmin):
 class StudentAdmin(admin.ModelAdmin):
     model = Student
     fieldsets = (
-        (('Personal info'), {'fields': ('name', 'surname','age','school_id','class_number','classroom_id','emergency_contact','emergency_confirmed')}),
+        (('Personal info'), {'fields': ('name', 'surname', 'email', 'icon','secret_word', 'age','school_id','class_number','classroom_id','emergency_contact','emergency_confirmed')}),
         (('Permissions'), {'fields': ('is_active', 'is_staff', 'groups', 'user_permissions')}),
     )
     add_fieldsets = (
@@ -53,11 +53,17 @@ class StudentAdmin(admin.ModelAdmin):
             'fields': ('name', 'surname','school_id','emergency_contact','age'),
         }),
     )
-    list_display=("id","name","surname","age","school_id","class_number","classroom_id","emergency_contact","emergency_confirmed","created_date",'login_date',"updated_date","get_total_answers","get_total_correct_answers","get_total_wrong_answers") #logintimestamp
-    search_fields = ('name', 'surname','emmergency_contact')
+    list_display=("id","name","surname",'email','icon','secret_word',"age","school_id","class_number","classroom_id","emergency_contact","emergency_confirmed","created_date",'login_date',"updated_date","get_total_answers","get_total_correct_answers","get_total_wrong_answers") #logintimestamp
+    search_fields = ('name', 'surname','email','emmergency_contact')
     ordering = ('id',)
 
-
+    def get_form(self, request, obj=None, **kwargs):
+        form = super(StudentAdmin, self).get_form(request, obj, **kwargs)
+        form.base_fields['email'].required = False
+        form.base_fields['secret_word'].required = False
+        form.base_fields['icon'].required = False
+        form.base_fields['emergency_confirmed'].required = True
+        return form
 
     def get_total_answers(self,obj):
         return Answer.objects.count()

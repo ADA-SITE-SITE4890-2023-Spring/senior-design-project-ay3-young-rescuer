@@ -17,10 +17,8 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # TODO: dbda shekil save etmek ucun (sehv var duzelt)
-# MEDIA_URL = "/static/img/icons/"
-# MEDIA_ROOT=os.path.join(BASE_DIR,"/static/img/icons/")
-
-
+MEDIA_ROOT=os.path.join(BASE_DIR,"images")
+MEDIA_URL = "/images/"
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -45,23 +43,24 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'adminpanel',
-    'api.apps.ApiConfig',
+    'api',
+    'rest_framework_simplejwt',
+    'corsheaders',
     'rest_framework',
-    # 'rest_framework_simplejwt',
-    'corsheaders'
+    'rest_framework.authtoken',
+
 ]
 
 
-# REST_FRAMEWORK = {
-#     'DEFAULT_AUTHENTICATION_CLASSES': (
-#         'rest_framework_simplejwt.authentication.JWTAuthentication',
-#     ),
-# }
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
 
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-#    "django.middleware.common.CommonMiddleware",
     'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -70,15 +69,11 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-AUTHENTICATION_BACKENDS = [
-    'django.contrib.auth.backends.ModelBackend',
-    'adminpanel.backend.TeacherBackend',
-]
-
 # AUTHENTICATION_BACKENDS = [
 #     'django.contrib.auth.backends.ModelBackend',
-#     'users.backends.CustomUserModelBackend',
+#     'adminpanel.backend.TeacherBackend',
 # ]
+
 AUTH_USER_MODEL = 'adminpanel.Admin'
 ROOT_URLCONF = 'youngRescuer.urls'
 
@@ -149,45 +144,55 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-CORS_ALLOW_ALL_ORIGINS = True
 
-#
-# SIMPLE_JWT = {
-#     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
-#     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
-#     "ROTATE_REFRESH_TOKENS": False,
-#     "BLACKLIST_AFTER_ROTATION": False,
-#     "UPDATE_LAST_LOGIN": False,
-#
-#     "ALGORITHM": "HS256",
-#     "SIGNING_KEY": SECRET_KEY,
-#     "VERIFYING_KEY": "",
-#     "AUDIENCE": None,
-#     "ISSUER": None,
-#     "JSON_ENCODER": None,
-#     "JWK_URL": None,
-#     "LEEWAY": 0,
-#
-#     "AUTH_HEADER_TYPES": ("Bearer",),
-#     "AUTH_HEADER_NAME": "HTTP_AUTHORIZATION",
-#     "USER_ID_FIELD": "id",
-#     "USER_ID_CLAIM": "user_id",
-#     "USER_AUTHENTICATION_RULE": "rest_framework_simplejwt.authentication.default_user_authentication_rule",
-#
-#     "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",),
-#     "TOKEN_TYPE_CLAIM": "token_type",
-#     "TOKEN_USER_CLASS": "rest_framework_simplejwt.models.TokenUser",
-#
-#     "JTI_CLAIM": "jti",
-#
-#     "SLIDING_TOKEN_REFRESH_EXP_CLAIM": "refresh_exp",
-#     "SLIDING_TOKEN_LIFETIME": timedelta(minutes=5),
-#     "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(days=1),
-#
-#     "TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainPairSerializer",
-#     "TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSerializer",
-#     "TOKEN_VERIFY_SERIALIZER": "rest_framework_simplejwt.serializers.TokenVerifySerializer",
-#     "TOKEN_BLACKLIST_SERIALIZER": "rest_framework_simplejwt.serializers.TokenBlacklistSerializer",
-#     "SLIDING_TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainSlidingSerializer",
-#     "SLIDING_TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSlidingSerializer",
-# }
+# EMAIL_USE_TLS = True
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_PORT = 587
+# EMAIL_HOST_USER = 'me@gmail.com'
+# EMAIL_HOST_PASSWORD = 'password'
+
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_HTTPONLY = True
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    "ROTATE_REFRESH_TOKENS": False,
+    "BLACKLIST_AFTER_ROTATION": False,
+    "UPDATE_LAST_LOGIN": False,
+
+    "ALGORITHM": "HS256",
+    "SIGNING_KEY": SECRET_KEY,
+    "VERIFYING_KEY": "",
+    "AUDIENCE": None,
+    "ISSUER": None,
+    "JSON_ENCODER": None,
+    "JWK_URL": None,
+    "LEEWAY": 0,
+
+    "AUTH_HEADER_TYPES": ("Bearer",),
+    "AUTH_HEADER_NAME": "HTTP_AUTHORIZATION",
+    "USER_ID_FIELD": "id",
+    "USER_ID_CLAIM": "user_id",
+    "USER_AUTHENTICATION_RULE": "rest_framework_simplejwt.authentication.default_user_authentication_rule",
+
+    "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",),
+    "TOKEN_TYPE_CLAIM": "token_type",
+    "TOKEN_USER_CLASS": "rest_framework_simplejwt.models.TokenUser",
+
+    "JTI_CLAIM": "jti",
+
+    "SLIDING_TOKEN_REFRESH_EXP_CLAIM": "refresh_exp",
+    "SLIDING_TOKEN_LIFETIME": timedelta(minutes=5),
+    "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(days=1),
+
+    "TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainPairSerializer",
+    "TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSerializer",
+    "TOKEN_VERIFY_SERIALIZER": "rest_framework_simplejwt.serializers.TokenVerifySerializer",
+    "TOKEN_BLACKLIST_SERIALIZER": "rest_framework_simplejwt.serializers.TokenBlacklistSerializer",
+    "SLIDING_TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainSlidingSerializer",
+    "SLIDING_TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSlidingSerializer",
+}
