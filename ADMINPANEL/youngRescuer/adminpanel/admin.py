@@ -82,6 +82,8 @@ class SchoolAdmin(admin.ModelAdmin):
 
 class ClassroomAdmin(admin.ModelAdmin):
     list_display=("id","name","created_by","created_date","updated_date",'get_total_students')
+    search_fields = ('name', 'created_by')
+    list_filter = ['created_by']
     def get_total_students(self,obj):
         return obj.students.all().count()
     get_total_students.short_description = 'Total Students'

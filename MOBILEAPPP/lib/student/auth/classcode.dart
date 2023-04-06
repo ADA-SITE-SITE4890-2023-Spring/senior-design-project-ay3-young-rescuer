@@ -64,9 +64,17 @@ class _ClasscodeState extends State<Classcode> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
-
               children: [
                 SizedBox(height: 15),
+                Text(
+                  "Ask your teacher to get Classroom Code",
+                  style: TextStyle(
+                    color:Color(0xFFF79B26),
+                    fontSize: 17,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 20),
                 TextFormField(
                   keyboardType: TextInputType.name,
                   controller:classcodecontroller,

@@ -22,7 +22,7 @@ class OTPcodeState extends State<OTPcode>{
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Sign Up",
+          "Confirmation Code",
           style: TextStyle(
             color: Colors.white,
           ),

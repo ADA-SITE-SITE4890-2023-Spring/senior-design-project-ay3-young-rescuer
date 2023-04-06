@@ -39,6 +39,7 @@ dependencies:
   date_field: ^3.0.2
   http: ^0.13.5
   autocomplete_textfield: 2.0.1
+  flutter_typeahead: 4.3.7
 
 dev_dependencies:
   flutter_test:

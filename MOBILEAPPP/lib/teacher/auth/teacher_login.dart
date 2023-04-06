@@ -147,7 +147,8 @@ class _LoginState extends State<Login> {
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
-                ),),
+                ),
+                ),
             ],),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,

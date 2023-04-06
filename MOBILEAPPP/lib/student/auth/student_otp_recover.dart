@@ -19,7 +19,7 @@ class VerificationState extends State<Verification>{
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Forgot Password",
+          "Confirmation Code",
           style: TextStyle(
             color: Colors.white,
           ),

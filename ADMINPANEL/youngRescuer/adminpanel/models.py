@@ -107,6 +107,8 @@ class Classroom(models.Model):
     name = models.CharField(max_length=50, null=True, unique=True)
     created_by = models.ForeignKey(Teacher, on_delete=models.CASCADE, blank=True, null=True,
                                    related_name="classrooms")  # null=False
+    # school_name=models.ForeignKey(School,on_delete=models.CASCADE, blank=True, null=True,
+    #                                related_name="classroom")
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
 

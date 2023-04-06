@@ -79,23 +79,11 @@ class StudentState extends State<StudentFullName> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => ImageList(),
-                          // builder: (context) => SecretWord()
+                          // builder: (context) => ImageList(),
+                          builder: (context) => SecretWord()
                         ),
                       );
-                      /*   Navigator.push(
-                             context,
-                            MaterialPageRoute(
-                              builder: (context) => Registration(),
-                              ),
-                            );
-                            Navigator.push(
-                             context,
-                            MaterialPageRoute(
-                              builder: (context) => SecretWord(),
-                              ),
-                            );
-                       */
+
                     },
                     child: Text('Next',style:TextStyle(fontSize:20,color:Colors.white)),
                     style: OutlinedButton.styleFrom(

@@ -48,6 +48,15 @@ class SecretWordState extends State<SecretWord> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(height: 15),
+                Text(
+                  "Ask your teacher to get own secret word",
+                  style: TextStyle(
+                    color:Color(0xFFF79B26),
+                    fontSize: 17,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 15),
                 TextFormField(
                   keyboardType: TextInputType.name,
                   controller:secretwordcontroller,
