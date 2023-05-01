@@ -1,30 +1,63 @@
 import 'package:flutter/material.dart';
 import 'package:youngrescuer/student/auth/student_otp_signup.dart';
+import 'student.dart';
 
-
-class StudentRegistration extends StatefulWidget {
-  const StudentRegistration({Key? key}) : super(key: key);
+class StudentSettingsN extends StatefulWidget {
+  const StudentSettingsN({Key? key}) : super(key: key);
 
   @override
   // ignore: library_private_types_in_public_api
-  _StudentRegistrationState createState() => _StudentRegistrationState();
+  _StudentSettingsNState createState() => _StudentSettingsNState();
 }
 
-class _StudentRegistrationState extends State<StudentRegistration> {
+class _StudentSettingsNState extends State<StudentSettingsN> {
+  late Student student = new Student(
+      login_type: "image",
+      age: 15,
+      email: "esalahzada@gmail.com",
+      secret_word: "elcin",
+      icon: "icon1", school: "20 nomre",
+      classroom: "class5v",
+      class_number: "class4b",
+      emergency_contact: "0552552525",
+      emergency_confirmed: true,
+      name: "Elcin",
+      id: 10,
+      surname: "Salajjzada",
+      father_name: "Qurban"
+  );
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _getStudents();
+  // }
+  //
+  // void _getStudents() async {
+  //   var url = 'https://your-django-backend-url.com/api/students/';
+  //   var response = await http.get(Uri.parse(url));
+  //   if (response.statusCode == 200) {
+  //     var data = json.decode(response.body) as List;
+  //     setState(() {
+  //       _students = data.map((student) => Student.fromJson(student)).toList();
+  //     });
+  //   }
+  // }
+
 
   final _registerForm = GlobalKey<FormState>();
+  final TextEditingController previousPasswordController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmController = TextEditingController();
 
   final TextEditingController nameController = TextEditingController();
   final TextEditingController surnameController = TextEditingController();
   final TextEditingController fatherController = TextEditingController();
-  final TextEditingController classNameController = TextEditingController();
 
+  final TextEditingController classNameController = TextEditingController();
   final TextEditingController ageController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
-
   bool passToggle=true;
   @override
   Widget build(BuildContext context) {
@@ -41,15 +74,12 @@ class _StudentRegistrationState extends State<StudentRegistration> {
       ),
       body: SingleChildScrollView(
         child: Column(
-
             children: [
               Padding(
-
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Form(
                   key:_registerForm,
                   child: Column(
-
                       children: [
                         SizedBox(height: 30),
                         TextFormField(
@@ -99,7 +129,7 @@ class _StudentRegistrationState extends State<StudentRegistration> {
                         TextFormField(
                           keyboardType: TextInputType.name,
                           controller:fatherController,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             labelText: "Enter Your Father's Name",
                             border:OutlineInputBorder(),
                             prefixIcon: Icon(Icons.person),
@@ -115,13 +145,14 @@ class _StudentRegistrationState extends State<StudentRegistration> {
                             if(!namevalid){
                               return "Use only letters";
                             }
+                            return null;
                           },
                         ),
-                        SizedBox(height: 15),
+                        const SizedBox(height: 15),
                         TextFormField(
                           keyboardType: TextInputType.number,
                           controller:ageController,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             labelText: "Enter Your Age",
                             border:OutlineInputBorder(),
                             prefixIcon: Icon(Icons.date_range_outlined),
@@ -136,14 +167,14 @@ class _StudentRegistrationState extends State<StudentRegistration> {
                             }
                           },
                         ),
-                        SizedBox(height: 15),
+                        const SizedBox(height: 15),
 
                         TextFormField(
                           keyboardType: TextInputType.emailAddress,
                           controller:emailController,
                           decoration: InputDecoration(
                             labelText: "Enter email address",
-                            border:OutlineInputBorder(),
+                            border:const OutlineInputBorder(),
                             prefixIcon: Icon(Icons.email),
                           ),
                           validator: (value){
@@ -203,7 +234,35 @@ class _StudentRegistrationState extends State<StudentRegistration> {
                             return null;
                           },
                         ),
-                        const SizedBox(height: 15),
+                        SizedBox(height: 15),
+                        TextFormField(
+                          keyboardType: TextInputType.visiblePassword,
+                          controller: previousPasswordController,
+                          obscureText: passToggle,
+                          decoration: InputDecoration(
+                            labelText: "Enter previous password",
+                            border:OutlineInputBorder(),
+                            prefixIcon: Icon(Icons.lock_clock),
+                            suffix: InkWell(
+                              onTap:(){
+                                setState(() {
+                                  passToggle = !passToggle;
+                                });
+                              },
+                              child: Icon(passToggle ? Icons.visibility : Icons.visibility_off),
+                            ),
+                          ),
+                          validator:(value){
+                            if(value!.isEmpty){
+                              return "Enter password";
+                            }
+                            if(passwordController.text.length<8){
+                              return "Password length cannot be less than 8 character";
+                            }
+
+                          },
+                        ),
+                        SizedBox(height: 15),
                         TextFormField(
                           keyboardType: TextInputType.visiblePassword,
                           controller:passwordController,
@@ -288,7 +347,7 @@ class _StudentRegistrationState extends State<StudentRegistration> {
 
                             ),
                             child: Center(
-                              child:Text("Create Account", style: TextStyle(
+                              child:Text("Save", style: TextStyle(
                                 color:Colors.white,
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,

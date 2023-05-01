@@ -3,7 +3,6 @@ class PrivacyPolicy extends StatefulWidget {
   const PrivacyPolicy({Key? key}) : super(key: key);
 
   @override
-  // ignore: library_private_types_in_public_api
   _PrivacyPolicyState createState() => _PrivacyPolicyState();
 }
 
@@ -26,7 +25,7 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
             Column(mainAxisAlignment: MainAxisAlignment.center, children: const [
               Padding(
                   padding: EdgeInsets.symmetric(horizontal: 35,vertical:35),
-                  child: Text("Hello World")
+                  child: Text("")
               )
             ])));
   }

@@ -26,7 +26,7 @@ class _TermsOfServiceState extends State<TermsOfService> {
             Column(mainAxisAlignment: MainAxisAlignment.center, children: const [
               Padding(
                   padding: EdgeInsets.symmetric(horizontal: 35,vertical:35),
-             child: Text("Hello World")
+             child: Text("")
               )
             ])));
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:youngrescuer/student/auth/student_forgot_password.dart';
+import 'package:youngrescuer/student/dashboard/student_dashboard.dart';
 import 'student_registration.dart';
 
 class StudentLogin extends StatefulWidget {
@@ -99,7 +100,7 @@ class StudentLoginState extends State<StudentLogin> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => StudentLogin() // Student Dashboard
+                            builder: (context) => StudentDashboard()
                         ),
                       );
                       //jwt

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:youngrescuer/student/dashboard/student_dashboard.dart';
 import 'student_fullname.dart';
 
 import 'package:flutter/material.dart';
@@ -80,7 +81,7 @@ class SecretWordState extends State<SecretWord> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => SecretWord()
+                            builder: (context) => StudentDashboard()
                         ),
                       );
                     }

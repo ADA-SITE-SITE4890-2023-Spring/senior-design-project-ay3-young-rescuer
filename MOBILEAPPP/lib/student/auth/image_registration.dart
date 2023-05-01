@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:youngrescuer/student/dashboard/student_dashboard.dart';
 import 'classcode.dart';
 import 'student_fullname.dart';
 
@@ -112,22 +113,9 @@ class _ImageListState extends State<ImageList> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => ImageList(),
+                                  builder: (context) => StudentDashboard(),
                                 ),
                               );
-                              /*   Navigator.push(
-                             context,
-                            MaterialPageRoute(
-                              builder: (context) => Registration(),
-                              ),
-                            );
-                            Navigator.push(
-                             context,
-                            MaterialPageRoute(
-                              builder: (context) => SecretWord(),
-                              ),
-                            );
-                            */
                             },
                             child: Text('Enter Class',style:TextStyle(fontSize:20,color:Colors.white)),
                             style: OutlinedButton.styleFrom(
