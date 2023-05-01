@@ -7,9 +7,6 @@ from django.dispatch import receiver
 from django.utils import timezone
 
 
-# Deyishilmeli qruplashma 5-10 11-15 16+
-from youngRescuer import settings
-
 
 class StudentManager(BaseUserManager):
     def create_user(self, pk):
@@ -63,7 +60,6 @@ class Admin(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = ['name', 'surname']
 
     def update_last_login(self):
-        # Update the last_login_date field whenever a user logs in
         self.last_login_date = timezone.now()
         self.save()
 
@@ -120,8 +116,6 @@ class Classroom(models.Model):
                                    related_name="classrooms")  # null=False
 
     auth_type = models.CharField(null=True,max_length=1, choices=AUTH_TYPE)
-    # school_name=models.ForeignKey(School,on_delete=models.CASCADE, blank=True, null=True,
-    #                                related_name="classroom")
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
     def __str__(self):

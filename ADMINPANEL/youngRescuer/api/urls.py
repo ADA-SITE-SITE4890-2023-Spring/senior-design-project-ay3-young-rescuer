@@ -9,8 +9,6 @@ from rest_framework_simplejwt.views import (
 
 urlpatterns = [
     path('',views.getRoutes),
-    # path('userlogin/',views.teacher_view),
-    # path('classrooms/class/<str:n>',views.addStudent),
     path('students/',views.StudentView.as_view()),
     path('teachers/',views.TeacherView.as_view()),
     path('questions/', views.QuestionView.as_view()),
